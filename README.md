@@ -51,7 +51,7 @@ const runner = new TaskRunner<Task>(async ({task}) => {
 });
 ```
 
-#### Post new task
+### Post new task
 ```typescript
 
 runner.postTask({
@@ -79,13 +79,13 @@ runner.postTask({
 
 - `promiseHandle`: Task generator function. return `Promise`
 - `props`
-  - concurrentExecuteTaskMax: `number`. Wait if the task being executed is greater than the maximum concurrency.
-  - timeout?: `number`
+  - `concurrentExecuteTaskMax`: `number`. Wait if the task being executed is greater than the maximum concurrency.
+  - `timeout?`: `number`
 
 ### TaskRunner#postTask(task, options)
 
 - `task`: Your custom task. Task will be converted to `promise` through `promiseHandle` function.
 - `options`
-  - onResolve?: `Function`. Callback function after successful task execution
-  - onReject?: `Function`. Callback function after failed task execution
-  - priority: `number`. Task priority, The higher the number, the priority scheduling
+  - `onResolve?`: `Function`. Callback function after successful task execution
+  - `onReject?`: `Function`. Callback function after failed task execution
+  - `priority`: `number`. Task priority, The higher the number, the priority scheduling
