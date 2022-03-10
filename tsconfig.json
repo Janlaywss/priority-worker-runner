@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "es2018",
+    "module": "commonjs",
+    "rootDir": "./",
+    "outDir": "./build",
+    "removeComments": true,
+    "allowJs": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "declaration": true,
+    "types": [],
+    "moduleResolution": "Node",
+    "useUnknownInCatchVariables": false,
+  },
+  "include": [
+    "index.ts",
+    "src/**/*.ts",
+    "src/**/*.js",
+    "**/*.d.ts",
+    "**/*.spec.ts"
+  ],
+}

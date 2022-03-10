@@ -1,4 +1,4 @@
-import TaskRunner from '../src/TaskRunner';
+import TaskRunner from '../build';
 
 interface Task {
     event: 'timeout' | 'fetch',
@@ -8,7 +8,7 @@ interface Task {
 const timeoutTask = () => {
     return new Promise((resolve) => {
         setTimeout(() => {
-            resolve(1221121223123)
+            resolve('hello world')
         }, 10);
     })
 }
@@ -26,8 +26,8 @@ runner.postTask({
     event: 'timeout',
 }, {
     priority: 100,
-    onResolve: (task) => {
-        console.log(task);
+    onResolve: (result) => {
+        console.log(result);
     },
 })
 
@@ -35,7 +35,7 @@ runner.postTask({
     event: 'timeout',
 }, {
     priority: 100,
-    onResolve: (task) => {
-        console.log(task);
+    onResolve: (result) => {
+        console.log(result);
     },
 })

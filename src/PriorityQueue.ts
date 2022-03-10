@@ -2,9 +2,11 @@
 * original source: https://github.com/janogonzalez/priorityqueuejs/blob/master/index.js
 * */
 
-class PriorityQueue {
-    _comparator: (a, b) => (number);
-    _elements: any[];
+export type ComparatorType<T> = (a: T, b: T) => number;
+
+class PriorityQueue<T> {
+    _comparator: ComparatorType<T>;
+    _elements: T[];
 
     /**
      * Initializes a new empty `PriorityQueue` with the given `comparator(a, b)`
@@ -13,7 +15,7 @@ class PriorityQueue {
      * The comparator function must return a positive number when `a > b`, 0 when
      * `a == b` and a negative number when `a < b`.
      */
-    constructor(comparator) {
+    constructor(comparator: ComparatorType<T>) {
         this._comparator = comparator || PriorityQueue.DEFAULT_COMPARATOR;
         this._elements = [];
     }
@@ -27,7 +29,7 @@ class PriorityQueue {
      * @return {Number}
      * @api public
      */
-    static DEFAULT_COMPARATOR(a, b) {
+    static DEFAULT_COMPARATOR(a: string | number, b: string | number) {
         if (typeof a === 'number' && typeof b === 'number') {
             return a - b;
         } else {
@@ -75,7 +77,7 @@ class PriorityQueue {
 
         if (size === 0) return first;
 
-        this._elements[0] = last;
+        this._elements[0] = last as T;
         let current = 0;
 
         while (current < size) {
@@ -107,7 +109,7 @@ class PriorityQueue {
      * @return {Number}
      * @api public
      */
-    enq(element) {
+    enq(element: T) {
         const size = this._elements.push(element);
         let current = size - 1;
 
@@ -138,7 +140,7 @@ class PriorityQueue {
      *
      *  @param {Function} fn
      */
-    forEach(fn) {
+    forEach(fn: (...props: any) => void) {
         return this._elements.forEach(fn);
     }
 
@@ -151,7 +153,7 @@ class PriorityQueue {
      * @return {Number}
      * @api private
      */
-    _compare(a, b) {
+    _compare(a: number, b: number) {
         return this._comparator(this._elements[a], this._elements[b]);
     }
 
@@ -162,7 +164,7 @@ class PriorityQueue {
      * @param {Number} b
      * @api private
      */
-    _swap(a, b) {
+    _swap(a: number, b: number) {
         const aux = this._elements[a];
         this._elements[a] = this._elements[b];
         this._elements[b] = aux;

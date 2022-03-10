@@ -4,11 +4,12 @@ interface Worker<T> {
     task: T,
     priority: number,
     id: number,
-    onResolve: (res) => void,
-    onReject: (errorReason) => void,
+    timeoutId?: number
+    onResolve: (res: any) => void,
+    onReject: (errorReason: any) => void,
 }
 
-interface TaskRunnerProps {
+interface TaskRunnerProps<T> {
     concurrentExecuteTaskMax: number;
     timeout?: number;
 }
@@ -20,13 +21,13 @@ class TaskRunner<T> {
     promiseHandle: PromiseHandleType<T>;
     MAX_TASK_NUM: any;
     processingTask: Worker<T>[];
-    timeout: number;
+    timeout: number | undefined;
     isProcessing: number;
     historyWorkerCount: number;
 
-    constructor(promiseHandle: PromiseHandleType<T>, props: TaskRunnerProps) {
+    constructor(promiseHandle: PromiseHandleType<T>, props: TaskRunnerProps<T>) {
         const {concurrentExecuteTaskMax, timeout} = props;
-        this.queue = new PriorityQueue((a, b) => {
+        this.queue = new PriorityQueue<Worker<T>>((a, b) => {
             return a.priority - b.priority;
         });
 
@@ -39,7 +40,7 @@ class TaskRunner<T> {
         this.historyWorkerCount = 0;
     }
 
-    waitForTimeout(worker) {
+    waitForTimeout(worker: Worker<T>) {
         return new Promise((resolve, reject) => {
             worker.timeoutId = setTimeout(() => {
                 reject()
