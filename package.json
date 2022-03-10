@@ -1,15 +1,32 @@
 {
   "name": "priority-worker-runner",
-  "version": "0.1.1",
-  "description": "",
+  "version": "0.0.1",
+  "description": "Priority queue based task execution queue",
   "main": "build/index.js",
   "scripts": {
     "build": "rm -rf ./build && tsc --project ./",
     "demo": "ts-node ./demo/basic.ts"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "priority",
+    "queue",
+    "priority queue",
+    "data structure",
+    "worker",
+    "runner",
+    "task",
+    "concurrent"
+  ],
+  "homepage": "https://github.com/janlaywss/priority-worker-runner",
+  "bugs": {
+    "url": "https://github.com/janlaywss/priority-worker-runner/issues"
+  },
+  "license": "MIT",
+  "author": "Janlay Wong <janlaywss@gmail.com> (https://github.com/janlaywss)",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/janlaywss/priority-worker-runner.git"
+  },
   "devDependencies": {
     "ts-node": "^10.7.0",
     "typescript": "^4.6.2"
