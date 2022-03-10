@@ -3,6 +3,9 @@
 * */
 
 class PriorityQueue {
+    _comparator: (a, b) => (number);
+    _elements: any[];
+
     /**
      * Initializes a new empty `PriorityQueue` with the given `comparator(a, b)`
      * function, uses `.DEFAULT_COMPARATOR()` when no function is provided.
@@ -165,4 +168,4 @@ class PriorityQueue {
         this._elements[b] = aux;
     }
 }
-module.exports = PriorityQueue;
+export default PriorityQueue;
