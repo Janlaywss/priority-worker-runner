@@ -1,12 +1,13 @@
 {
   "name": "priority-worker-runner",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Priority queue based task execution queue",
   "main": "build/index.js",
   "scripts": {
     "build": "rm -rf ./build && tsc --project ./",
     "demo": "ts-node ./demo/basic.ts"
   },
+  "files": ["build"],
   "keywords": [
     "priority",
     "queue",
