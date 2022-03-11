@@ -30,6 +30,9 @@ runner.postTask({
     onResolve: (result) => {
         console.log(result);
     },
+    onReject: (errorReason) => {
+        console.error(errorReason);
+    },
 })
 
 runner.postTask({
@@ -38,5 +41,8 @@ runner.postTask({
     priority: 100,
     onResolve: (result) => {
         console.log(result);
+    },
+    onReject: (errorReason) => {
+        console.error(errorReason);
     },
 })
