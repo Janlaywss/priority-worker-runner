@@ -20,6 +20,7 @@ const runner = new TaskRunner<Task>(async ({task}) => {
     }
 }, {
     concurrentExecuteTaskMax: 5,
+    timeout: 5,
 });
 
 runner.postTask({

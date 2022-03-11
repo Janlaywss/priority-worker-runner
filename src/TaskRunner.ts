@@ -43,7 +43,7 @@ class TaskRunner<T> {
     waitForTimeout(worker: Worker<T>) {
         return new Promise((resolve, reject) => {
             worker.timeoutId = setTimeout(() => {
-                reject()
+                reject('task execute timeout')
             }, this.timeout)
         })
     }
@@ -77,7 +77,6 @@ class TaskRunner<T> {
                 })
                 .catch((res) => {
                     onReject && onReject(res);
-                    onTaskEnd();
                 })
                 .finally(onTaskEnd)
         }
