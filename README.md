@@ -33,21 +33,33 @@ interface Task {
     payload?: any
 }
 
-const timeoutTask = () => {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve('hello world')
-        }, 10);
-    })
+type TimeRef = {value: number | undefined};
+
+const timeoutTask = (timeRef: TimeRef) => {
+  return new Promise((resolve) => {
+    // @ts-ignore
+    timeRef.value = setTimeout(() => {
+      resolve('hello world')
+    }, 1000);
+  })
 }
 
-const runner = new TaskRunner<Task>(async ({task}) => {
-    const {event} = task;
+
+const runner = new TaskRunner<Task>(({task}) => {
+  let timeRef: TimeRef = {value: undefined};
+  const cleanup = () => {
+    clearTimeout(timeRef.value);
+  }
+  const handle = async () => {
+    const event = task.event;
     if (event === 'timeout') {
-        return await timeoutTask();
+      return await timeoutTask(timeRef);
     }
+  }
+  return {handle, cleanup}
 }, {
-    concurrentExecuteTaskMax: 5,
+  concurrentExecuteTaskMax: 5,
+  timeout: 5,
 });
 ```
 
@@ -77,7 +89,9 @@ runner.postTask({
 
 ### new TaskRunner(promiseHandle, props)
 
-- `promiseHandle`: Task generator function. return `Promise`
+- `promiseHandle`: 
+  - handle: Task generator function. return `Promise`
+  - cleanup: clean running effect
 - `props`
   - `concurrentExecuteTaskMax`: `number`. Wait if the task being executed is greater than the maximum concurrency.
   - `timeout?`: `number`
