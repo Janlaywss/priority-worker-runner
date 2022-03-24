@@ -91,7 +91,7 @@ runner.postTask({
 
 - `promiseHandle`: 
   - handle: Task generator function. return `Promise`
-  - cleanup: clean running effect
+  - cleanup: `function` clean running effect
 - `props`
   - `concurrentExecuteTaskMax`: `number`. Wait if the task being executed is greater than the maximum concurrency.
   - `timeout?`: `number`
