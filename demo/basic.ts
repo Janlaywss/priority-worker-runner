@@ -5,19 +5,29 @@ interface Task {
     payload?: any
 }
 
-const timeoutTask = () => {
+type TimeRef = {value: number | undefined};
+
+const timeoutTask = (timeRef: TimeRef) => {
     return new Promise((resolve) => {
-        setTimeout(() => {
+        // @ts-ignore
+        timeRef.value = setTimeout(() => {
             resolve('hello world')
-        }, 10);
+        }, 1000);
     })
 }
 
-const runner = new TaskRunner<Task>(async ({task}) => {
-    const event = task.event;
-    if (event === 'timeout') {
-        return await timeoutTask();
+const runner = new TaskRunner<Task>(({task}) => {
+    let timeRef: TimeRef = {value: undefined};
+    const cleanup = () => {
+        clearTimeout(timeRef.value);
     }
+    const handle = async () => {
+        const event = task.event;
+        if (event === 'timeout') {
+            return await timeoutTask(timeRef);
+        }
+    }
+    return {handle, cleanup}
 }, {
     concurrentExecuteTaskMax: 5,
     timeout: 5,
