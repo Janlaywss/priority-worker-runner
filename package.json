@@ -1,6 +1,6 @@
 {
   "name": "priority-worker-runner",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "Priority queue based task execution queue",
   "main": "build/index.js",
   "scripts": {
