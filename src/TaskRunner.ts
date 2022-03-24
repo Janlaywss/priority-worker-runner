@@ -14,7 +14,7 @@ interface TaskRunnerProps<T> {
     timeout?: number;
 }
 
-type PromiseHandleType<T> = (worker: Worker<T>) => Promise<any>;
+type PromiseHandleType<T> = (worker: Worker<T>) => {handle: () => Promise<any>, cleanup?: () => void}
 
 class TaskRunner<T> {
     queue: any;
@@ -56,16 +56,17 @@ class TaskRunner<T> {
             this.isProcessing++;
             this.processingTask.push(worker);
 
-            const taskPromise = this.promiseHandle(worker);
+            const {handle: taskPromise, cleanup} = this.promiseHandle(worker);
 
             const onTaskEnd = () => {
+                cleanup && cleanup();
                 clearTimeout(worker.timeoutId);
                 this.isProcessing--;
                 this.processingTask = this.processingTask.filter(({id}) => id !== runningId);
                 this.check();
             }
 
-            const race = [taskPromise];
+            const race = [taskPromise()];
 
             if (this.timeout) {
                 race.push(this.waitForTimeout(worker));
